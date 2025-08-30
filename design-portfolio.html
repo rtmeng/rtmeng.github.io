@@ -178,7 +178,7 @@
             padding: 60px 20px;
             background-color: #fafafa;
         }
-        
+
         .gallery-header {
             text-align: center;
             margin-bottom: 50px;
@@ -197,7 +197,33 @@
             margin: 0 auto;
             line-height: 1.6;
         }
+                
+        /* Car Gallery Section */
+        .car-gallery {
+            min-height: 100vh;
+            padding: 60px 20px;
+            background-color: #fafafa;
+        }
+                
+        .car-gallery-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
         
+        .car-gallery-header h2 {
+            font-size: 42px;
+            color: #1e1e1e;
+            margin-bottom: 15px;
+        }
+        
+        .car-gallery-header p {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -205,9 +231,26 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        .new-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: auto;
+            color: #fafafa;
+        }
+
+        .car-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
         
         .photo-item {
-            background: white;
+            background: #fafafa;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -219,6 +262,21 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
         
+                
+        .car-photo-item {
+            background: #fafafa;
+            overflow: hidden;
+            height: 180px;
+            padding-left: 10px;
+            padding-right: 20px;
+            padding-top: 10px;
+        }
+        
+        .car-photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
         .photo-placeholder {
             width: 100%;
             height: 250px;
@@ -226,7 +284,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #fafafa;
             font-size: 18px;
             font-weight: bold;
         }
@@ -253,7 +311,7 @@
             bottom: 20px;
             right: 20px;
             background-color: rgba(0, 0, 0, 0.7);
-            color: white;
+            color: #fafafa;
             border: none;
             border-radius: 50%;
             width: 50px;
@@ -301,6 +359,24 @@
             .portfolio-gallery {
                 padding: 40px 15px;
             }
+
+            .car-gallery {
+                padding: 40px 15px;
+            }
+
+            .car-gallery-header h2 {
+                font-size: 32px;
+            }
+            
+            .car-photo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .picture-frames
+            {
+            
+            }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -314,7 +390,7 @@
         
         <header class="header">
             <h1>Art & Design Portfolio</h1>
-            <p>Interactive 3D Castle Model</p>
+            <p>Interactive CAD Castle Model - the start of my 3D design work</p>
         </header>
         
         <div class="model-container">
@@ -332,52 +408,39 @@
     </section>
 
     <!-- Portfolio Gallery Section -->
+    <section class="car-gallery" id="car-gallery">
+        <div class="car-gallery-header">
+            <h2 style="color: #fafafa">Portfolio Gallery</h2>
+            <p><i>Explore my collection of design work and creative projects with the</i> University of Michigan Solar Car Team</p>
+        </div>
+        
+        <div class="car-photo-grid">
+            <div class="car-photo-item"><img src="/images/millennium_tail_candy_corn_white_canopy.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millennium_tail_dani.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millennium_tail_wave.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millie_for_luis.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millennium_semi_final_option1.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millennium_semi_final_option3.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millennium_semi_final_option4.png" style="width: 560px;"></div>
+            <div class="car-photo-item"><img src="/images/millennium_tail_sundial_white_fin_canopy.png" style="width: 560px;"></div>
+
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery Section -->
     <section class="portfolio-gallery" id="portfolio-gallery">
         <div class="gallery-header">
             <h2 style="color: #fafafa">Portfolio Gallery</h2>
             <p>Explore my collection of design work, architectural models, and creative projects</p>
         </div>
-        
-        <div class="photo-grid">
-            <div class="photo-item">
-                <div class="photo-placeholder">Project 1</div>
-                <div class="photo-content">
-                    <h3>Architectural Design</h3>
-                    <p>Modern residential building design with sustainable features and innovative spatial planning.</p>
-                </div>
-            </div>
-            
-            <div class="photo-item">
-                <div class="photo-placeholder">Project 2</div>
-                <div class="photo-content">
-                    <h3>3D Visualization</h3>
-                    <p>Photorealistic rendering of interior spaces showcasing lighting and material studies.</p>
-                </div>
-            </div>
-            
-            <div class="photo-item">
-                <div class="photo-placeholder">Project 3</div>
-                <div class="photo-content">
-                    <h3>Urban Planning</h3>
-                    <p>Community center design integrating public spaces with natural landscape elements.</p>
-                </div>
-            </div>
-            
-            <div class="photo-item">
-                <div class="photo-placeholder">Project 4</div>
-                <div class="photo-content">
-                    <h3>Digital Art</h3>
-                    <p>Abstract digital compositions exploring color theory and geometric patterns.</p>
-                </div>
-            </div>
-            
-            <div class="photo-item">
-                <div class="photo-placeholder">Project 5</div>
-                <div class="photo-content">
-                    <h3>Product Design</h3>
-                    <p>Functional furniture pieces combining traditional craftsmanship with modern aesthetics.</p>
-                </div>
-            </div>
+       <!--
+        <div class="new-photo-grid">
+
+            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame1.png" style="width: 400px; color: #fafafa;"></div>
+            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame3.png" style="width: 400px; color: #fafafa;"></div>
+            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame5.png" style="width: 400px; color: #fafafa;"></div>
+            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame6.png" style="width: 400px; color: #fafafa;"></div>
+            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame7.png" style="width: 400px; color: #fafafa;"></div>            
             
             <div class="photo-item">
                 <div class="photo-placeholder">Project 6</div>
@@ -387,6 +450,15 @@
                 </div>
             </div>
         </div>
+    -->
+        <div class="picture-frames">
+        <img src="./images/frame1.png" alt="Description of your image" style="width: 34%; height: auto;">
+        <img src="./images/frame3.png" alt="Description of your image" style="max-height: 370px; width: auto;">
+        <img src="./images/frame5.png" alt="Description of your image" style="max-height: 370px; width: auto;">
+        <img src="./images/frame6.png" alt="Description of your image" style="max-width: 40%; height: auto;">
+        <img src="./images/frame7.png" alt="Description of your image" style="max-width: 40%; height: auto;">
+        </div>
+
     </section>
 
     <!-- Back to Top Button -->
@@ -515,7 +587,7 @@
             
             // Get the position of the gallery section
             const galleryRect = gallerySection.getBoundingClientRect();
-            const isGalleryVisible = galleryRect.top <= window.innerHeight / 2;
+            const isGalleryVisible = galleryRect.top <= window.innerHeight * (2.0 / 3.0);
             
             // Handle back to top button
             if (window.scrollY > window.innerHeight / 2) {
@@ -537,7 +609,7 @@
             if (isGalleryVisible) {
                 header.innerHTML = '<h1>Portfolio Gallery</h1><p>Explore my collection of design work</p>';
             } else {
-                header.innerHTML = '<h1>Art & Design Portfolio</h1><p>Interactive 3D Castle Model</p>';
+                header.innerHTML = '<h1>Art & Design Portfolio</h1><p>Interactive 3D Castle Model - a start of my CAD design work</p>';
             }
         });
         
