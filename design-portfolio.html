@@ -452,7 +452,7 @@
             <p>Explore my collection of design work, architectural models, and creative projects: <i>drag to dig through my artwork</i></p>
         </div>
 
-        
+
         <div class="picture-frames" data-frame="true">
         <img src="./images/frame1.png" alt="Description of your image" style="width: 34%; height: auto;">
         <img src="./images/frame3.png" alt="Description of your image" style="max-height: 370px; width: auto;">
@@ -480,16 +480,15 @@
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xf0f0f0);
             
-            // Create camera with 45-degree upward angle
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             
-            // Position camera at 45-degree upward angle
-            const distance = 8; // Distance from the castle
-            const height = distance * Math.sin(Math.PI / 450); // 45 degrees in radians
+            // Position camera at upward angle
+            const distance = 8;
+            const height = distance * Math.sin(Math.PI / 450);
             const horizontalDistance = distance * Math.cos(Math.PI / 450);
             
             camera.position.set(horizontalDistance, height, horizontalDistance);
-            camera.lookAt(0, 0, 0); // Look at the center of the scene
+            camera.lookAt(0, 0, 0);
             
             // Create renderer
             const container = document.getElementById('castle-viewer');
@@ -623,13 +622,10 @@
 
 
 
-        // === Draggable PNGs for the frames — runs only on your 3rd page ===
         (function () {
-           // ✅ Enable script ONLY if .picture-frames[data-frame="true"] exists
             const stage = document.querySelector('.picture-frames[data-frame="true"]');
             if (!stage) return;
 
-            // Ensure the stage is a positioning context
             if (getComputedStyle(stage).position === 'static') {
             stage.style.position = 'relative';
             }
@@ -640,11 +636,9 @@
             function px(n) { return n + 'px'; }
             function clamp(v, min, max) { return Math.max(min, Math.min(v, max)); }
 
-            // Convert current visual positions to absolute left/top (so they don't jump)
             function absolutize(img) {
             const s = getComputedStyle(img);
 
-            // If already absolute with px coordinates, we’re done
             if (s.position === 'absolute' && s.left.endsWith('px') && s.top.endsWith('px')) {
                 img.classList.add('draggable');
                 return;
@@ -660,23 +654,16 @@
             img.style.position = 'absolute';
             img.style.left = px(left);
             img.style.top  = px(top);
-            img.style.margin = '0'; // margins can throw off math; remove once absolute
+            img.style.margin = '0';
             }
-
-
-
-
-
-
 
             const stageRect = stage.getBoundingClientRect();
             const stageCenterX = stageRect.width / 2;
             const stageCenterY = stageRect.height / 390;
-            // 2. Update the `absolutize(img)` function
+
             function absolutize(img, i) {
                 const s = getComputedStyle(img);
 
-                // If already absolute with px coordinates, we’re done
                 if (s.position === 'absolute' && s.left.endsWith('px') && s.top.endsWith('px')) {
                     img.classList.add('draggable');
                     return;
@@ -687,8 +674,7 @@
                 const imgWidth = rect.width;
                 const imgHeight = rect.height;
 
-                // Place each image with slight offset so they don’t fully overlap
-                const offset = i * 20;  // adjust spread between frames
+                const offset = i * 20;
                 const left = stageCenterX - imgWidth / 2 + offset;
                 const top  = stageCenterY - imgHeight / 2 + offset;
 
@@ -698,15 +684,7 @@
                 img.style.top  = px(top);
                 img.style.margin = '0';
             }
-
-
-
-
-
             imgs.forEach((img, i) => absolutize(img, i));
-
-
-            //imgs.forEach(absolutize);
 
             function onDown(e) {
             dragging = e.currentTarget;
