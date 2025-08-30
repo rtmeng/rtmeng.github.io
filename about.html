@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Times New Roman", serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+        }
+        
+        .navigation {
+            text-align: center;
+        }
+        
+        .navigation a {
+            display: block;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+            margin: 20px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .navigation a:hover {
+            color: #666;
+        }
+
+        
+       .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 120;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: text-decoration 0.3s ease;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link-arrow {
+            position: fixed;
+            top: 20px;
+            left: 5px;
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 101;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: text-decoration 0.3s ease;
+        }
+        
+    </style>
+</head>
+<body>
+    <p class="back-link-arrow">←</p><a href="index.html" class="back-link"> Back to Home</a>
+    <nav class="navigation">
+        <p>more coming soon!</p>
+    </nav>
+</body>
+</html>

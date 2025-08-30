@@ -36,13 +36,37 @@
         .navigation a:hover {
             color: #666;
         }
+
+        .header {
+            color: black;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+            backdrop-filter: blur(1px);
+            padding: 15px 30px;
+            border-radius: 10px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin: 0 0 5px 0;
+            color: #1e1e1e;
+        }
     </style>
 </head>
 <body>
+    <header class="header">
+            <h1>Rachel Meng</h1>
+            <p>portfolio and projects</p>
+
+    </header>
     <nav class="navigation">
+        <a href="about.html">About</a>
         <a href="design-portfolio.html">Art & Design Portfolio</a>
         <a href="projects.html">Projects</a>
-        <a href="about.html">About</a>
         <!--<a href="contact.html">Contact</a>!-->
     </nav>
 </body>
