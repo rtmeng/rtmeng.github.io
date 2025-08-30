@@ -372,12 +372,30 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-
-            .picture-frames
-            {
-            
-            }
         }
+
+        .picture-frames {
+        position: relative;
+        min-height: 70vh;
+        overflow: hidden;
+        }
+
+        .picture-frames .draggable {
+        position: absolute;     
+        user-select: none;
+        -webkit-user-drag: none;
+        touch-action: none;
+        cursor: grab;
+        will-change: left, top;
+        transition: box-shadow .15s ease;
+        }
+
+        .picture-frames .draggable.dragging {
+        cursor: grabbing;
+        box-shadow: 0 10px 30px rgba(0,0,0,.18);
+        }
+
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -431,33 +449,18 @@
     <section class="portfolio-gallery" id="portfolio-gallery">
         <div class="gallery-header">
             <h2 style="color: #fafafa">Portfolio Gallery</h2>
-            <p>Explore my collection of design work, architectural models, and creative projects</p>
+            <p>Explore my collection of design work, architectural models, and creative projects: <i>drag to dig through my artwork</i></p>
         </div>
-       <!--
-        <div class="new-photo-grid">
 
-            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame1.png" style="width: 400px; color: #fafafa;"></div>
-            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame3.png" style="width: 400px; color: #fafafa;"></div>
-            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame5.png" style="width: 400px; color: #fafafa;"></div>
-            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame6.png" style="width: 400px; color: #fafafa;"></div>
-            <div class="photo-placeholder" style="color: #fafafa;"><img src="./images/frame7.png" style="width: 400px; color: #fafafa;"></div>            
-            
-            <div class="photo-item">
-                <div class="photo-placeholder">Project 6</div>
-                <div class="photo-content">
-                    <h3>Concept Art</h3>
-                    <p>Environmental concept designs for interactive media and storytelling applications.</p>
-                </div>
-            </div>
-        </div>
-    -->
-        <div class="picture-frames">
+        
+        <div class="picture-frames" data-frame="true">
         <img src="./images/frame1.png" alt="Description of your image" style="width: 34%; height: auto;">
         <img src="./images/frame3.png" alt="Description of your image" style="max-height: 370px; width: auto;">
         <img src="./images/frame5.png" alt="Description of your image" style="max-height: 370px; width: auto;">
         <img src="./images/frame6.png" alt="Description of your image" style="max-width: 40%; height: auto;">
         <img src="./images/frame7.png" alt="Description of your image" style="max-width: 40%; height: auto;">
         </div>
+
 
     </section>
 
@@ -615,6 +618,144 @@
         
         // Initialize when page loads
         window.addEventListener('load', init);
+
+
+
+
+
+        // === Draggable PNGs for the frames — runs only on your 3rd page ===
+        (function () {
+           // ✅ Enable script ONLY if .picture-frames[data-frame="true"] exists
+            const stage = document.querySelector('.picture-frames[data-frame="true"]');
+            if (!stage) return;
+
+            // Ensure the stage is a positioning context
+            if (getComputedStyle(stage).position === 'static') {
+            stage.style.position = 'relative';
+            }
+
+            const imgs = Array.from(stage.querySelectorAll('img'));
+            let dragging = null, startX = 0, startY = 0, baseLeft = 0, baseTop = 0, zTop = 1;
+
+            function px(n) { return n + 'px'; }
+            function clamp(v, min, max) { return Math.max(min, Math.min(v, max)); }
+
+            // Convert current visual positions to absolute left/top (so they don't jump)
+            function absolutize(img) {
+            const s = getComputedStyle(img);
+
+            // If already absolute with px coordinates, we’re done
+            if (s.position === 'absolute' && s.left.endsWith('px') && s.top.endsWith('px')) {
+                img.classList.add('draggable');
+                return;
+            }
+
+            const rect = img.getBoundingClientRect();
+            const stageRect = stage.getBoundingClientRect();
+
+            const left = rect.left - stageRect.left + stage.scrollLeft;
+            const top  = rect.top  - stageRect.top  + stage.scrollTop;
+
+            img.classList.add('draggable');
+            img.style.position = 'absolute';
+            img.style.left = px(left);
+            img.style.top  = px(top);
+            img.style.margin = '0'; // margins can throw off math; remove once absolute
+            }
+
+
+
+
+
+
+
+            const stageRect = stage.getBoundingClientRect();
+            const stageCenterX = stageRect.width / 2;
+            const stageCenterY = stageRect.height / 390;
+            // 2. Update the `absolutize(img)` function
+            function absolutize(img, i) {
+                const s = getComputedStyle(img);
+
+                // If already absolute with px coordinates, we’re done
+                if (s.position === 'absolute' && s.left.endsWith('px') && s.top.endsWith('px')) {
+                    img.classList.add('draggable');
+                    return;
+                }
+
+                const rect = img.getBoundingClientRect();
+
+                const imgWidth = rect.width;
+                const imgHeight = rect.height;
+
+                // Place each image with slight offset so they don’t fully overlap
+                const offset = i * 20;  // adjust spread between frames
+                const left = stageCenterX - imgWidth / 2 + offset;
+                const top  = stageCenterY - imgHeight / 2 + offset;
+
+                img.classList.add('draggable');
+                img.style.position = 'absolute';
+                img.style.left = px(left);
+                img.style.top  = px(top);
+                img.style.margin = '0';
+            }
+
+
+
+
+
+            imgs.forEach((img, i) => absolutize(img, i));
+
+
+            //imgs.forEach(absolutize);
+
+            function onDown(e) {
+            dragging = e.currentTarget;
+            dragging.classList.add('dragging');
+            dragging.style.zIndex = String(++zTop);
+
+            startX = e.clientX;
+            startY = e.clientY;
+            baseLeft = parseFloat(dragging.style.left) || 0;
+            baseTop  = parseFloat(dragging.style.top)  || 0;
+
+            dragging.setPointerCapture?.(e.pointerId);
+            }
+
+            function onMove(e) {
+            if (!dragging) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            const stageRect = stage.getBoundingClientRect();
+            const elWidth = dragging.offsetWidth;
+            const elHeight = dragging.offsetHeight;
+
+            let nextLeft = baseLeft + dx;
+            let nextTop  = baseTop  + dy;
+
+            const maxLeft = stageRect.width  - elWidth;
+            const maxTop  = stageRect.height - elHeight;
+
+            dragging.style.left = px(clamp(nextLeft, 0, Math.max(0, maxLeft)));
+            dragging.style.top  = px(clamp(nextTop,  0, Math.max(0, maxTop)));
+            }
+
+            function onUp(e) {
+            if (!dragging) return;
+            dragging.classList.remove('dragging');
+            dragging.releasePointerCapture?.(e.pointerId);
+            dragging = null;
+            }
+
+            imgs.forEach(img => {
+            img.addEventListener('pointerdown', onDown);
+            img.addEventListener('pointermove', onMove);
+            img.addEventListener('pointerup', onUp);
+            img.addEventListener('pointercancel', onUp);
+            img.addEventListener('lostpointercapture', onUp);
+            });
+        })();
     </script>
 </body>
 </html>
