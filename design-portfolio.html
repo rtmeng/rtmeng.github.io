@@ -13,10 +13,17 @@
         
         body {
             font-family: "Times New Roman", serif;
-            overflow: hidden;
+            overflow-x: hidden;
             margin: 0;
             padding: 0;
+            scroll-behavior: smooth;
+        }
+        
+        /* 3D Model Section */
+        .model-section {
             height: 100vh;
+            position: relative;
+            overflow: hidden;
         }
         
         .header {
@@ -33,7 +40,7 @@
         }
         
         .header h1 {
-            font-size: 48px; /* this is the size of the title of the page */
+            font-size: 48px;
             margin: 0 0 5px 0;
             color: #1e1e1e;
         }
@@ -75,7 +82,7 @@
         }
         
         .model-container {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100vw;
@@ -89,7 +96,7 @@
         }
         
         .loading-text {
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -113,75 +120,186 @@
             padding: 5px 10px;
             border-radius: 8px;
             font-size: 14px;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.3s ease;
         }
         
-        .portfolio-section {
+        .controls-info.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        /* Scroll Down Arrow */
+        .scroll-arrow {
             position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            width: 300px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 100;
+            cursor: pointer;
+            font-size: 24px;
+            color: rgb(71, 71, 71);
+            padding: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-arrow.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .scroll-arrow:hover {
             background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            max-height: 60vh;
-            overflow-y: auto;
+            transform: translateX(-50%) scale(1.1);
         }
         
-        .portfolio-section h2 {
-            font-size: 22px;
-            margin-bottom: 15px;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* Portfolio Gallery Section */
+        .portfolio-gallery {
+            min-height: 100vh;
+            padding: 60px 20px;
+            background-color: #fafafa;
+        }
+        
+        .gallery-header {
             text-align: center;
-            color: #333;
+            margin-bottom: 50px;
         }
         
-        .portfolio-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .gallery-header h2 {
+            font-size: 42px;
+            color: #1e1e1e;
+            margin-bottom: 15px;
         }
         
-        .portfolio-item {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .portfolio-item h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #333;
-        }
-        
-        .portfolio-item p {
-            font-size: 13px;
+        .gallery-header p {
+            font-size: 18px;
             color: #666;
-            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
         
-        /* Hide portfolio section on mobile */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .photo-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .photo-content {
+            padding: 20px;
+        }
+        
+        .photo-content h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .photo-content p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+        
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .portfolio-section {
-                display: none;
-            }
-            
-            .header {
-                top: 10px;
-                padding: 10px 20px;
-            }
-            
             .header h1 {
-                font-size: 22px;
+                font-size: 32px;
             }
             
             .controls-info {
-                bottom: 10px;
+                bottom: 70px;
                 font-size: 12px;
                 padding: 8px 15px;
+                left: 50%;
+            }
+            
+            .gallery-header h2 {
+                font-size: 32px;
+            }
+            
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .portfolio-gallery {
+                padding: 40px 15px;
             }
         }
     </style>
@@ -190,41 +308,92 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
-    <p class="back-link-arrow">←</p><a href="index.html" class="back-link"> Back to Home</a>
-    
-    <header class="header">
-        <h1>Art & Design Portfolio</h1>
-        <p>Interactive 3D Castle Model</p>
-    </header>
-    
-    <div class="model-container">
-        <div id="castle-viewer"></div>
-        <div class="loading-text" id="loading-text">Loading 3D Model...</div>
-    </div>
-    
-    <div class="controls-info">
-        Click and drag to rotate • Scroll to zoom • Right-click and drag to pan
-    </div>
-    
-    <!--
-    <section class="portfolio-section">
-        <h2>Other Works</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <h3>Digital Art</h3>
-                <p>Collection of digital artwork and illustrations.</p>
+    <!-- 3D Model Section -->
+    <section class="model-section" id="model-section">
+        <p class="back-link-arrow">←</p><a href="index.html" class="back-link"> Back to Home</a>
+        
+        <header class="header">
+            <h1>Art & Design Portfolio</h1>
+            <p>Interactive 3D Castle Model</p>
+        </header>
+        
+        <div class="model-container">
+            <div id="castle-viewer"></div>
+            <div class="loading-text" id="loading-text">Loading 3D Model...</div>
+        </div>
+        
+        <div class="controls-info">
+            Click and drag to rotate • Scroll to zoom • Right-click and drag to pan
+        </div>
+        
+        <div class="scroll-arrow" onclick="scrollToGallery()">
+            ↓
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery Section -->
+    <section class="portfolio-gallery" id="portfolio-gallery">
+        <div class="gallery-header">
+            <h2 style="color: #fafafa">Portfolio Gallery</h2>
+            <p>Explore my collection of design work, architectural models, and creative projects</p>
+        </div>
+        
+        <div class="photo-grid">
+            <div class="photo-item">
+                <div class="photo-placeholder">Project 1</div>
+                <div class="photo-content">
+                    <h3>Architectural Design</h3>
+                    <p>Modern residential building design with sustainable features and innovative spatial planning.</p>
+                </div>
             </div>
-            <div class="portfolio-item">
-                <h3>3D Modeling</h3>
-                <p>Various 3D models and architectural designs.</p>
+            
+            <div class="photo-item">
+                <div class="photo-placeholder">Project 2</div>
+                <div class="photo-content">
+                    <h3>3D Visualization</h3>
+                    <p>Photorealistic rendering of interior spaces showcasing lighting and material studies.</p>
+                </div>
             </div>
-            <div class="portfolio-item">
-                <h3>Design Projects</h3>
-                <p>UI/UX design and branding projects.</p>
+            
+            <div class="photo-item">
+                <div class="photo-placeholder">Project 3</div>
+                <div class="photo-content">
+                    <h3>Urban Planning</h3>
+                    <p>Community center design integrating public spaces with natural landscape elements.</p>
+                </div>
+            </div>
+            
+            <div class="photo-item">
+                <div class="photo-placeholder">Project 4</div>
+                <div class="photo-content">
+                    <h3>Digital Art</h3>
+                    <p>Abstract digital compositions exploring color theory and geometric patterns.</p>
+                </div>
+            </div>
+            
+            <div class="photo-item">
+                <div class="photo-placeholder">Project 5</div>
+                <div class="photo-content">
+                    <h3>Product Design</h3>
+                    <p>Functional furniture pieces combining traditional craftsmanship with modern aesthetics.</p>
+                </div>
+            </div>
+            
+            <div class="photo-item">
+                <div class="photo-placeholder">Project 6</div>
+                <div class="photo-content">
+                    <h3>Concept Art</h3>
+                    <p>Environmental concept designs for interactive media and storytelling applications.</p>
+                </div>
             </div>
         </div>
     </section>
-    -->
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
     <script>
         // 3D Scene Setup
         let scene, camera, renderer, controls;
@@ -273,7 +442,7 @@
             controls.enableZoom = true;
             controls.enablePan = true;
             
-            // Load the castle model (you'll need to replace this path with your actual model)
+            // Load the castle model
             loadCastleModel();
             
             // Handle window resize
@@ -285,7 +454,6 @@
         
         function loadCastleModel() {            
             // Load your Cinderella Castle model
-            const loader = new THREE.GLTFLoader();
             loader.load('models/cinderella_castle_3.glb', 
                 function(gltf) {
                     castle = gltf.scene;
@@ -297,58 +465,18 @@
                     document.getElementById('loading-text').style.display = 'none';
                 },
                 function(progress) {
-                    console.log('Loading progress: ', (progress.loaded / progress.total * 100) + '%');
+                    if (progress.total > 0) {
+                        const percentComplete = (progress.loaded / progress.total) * 100;
+                        console.log('Loading progress: ', percentComplete.toFixed(1) + '%');
+                    } else {
+                        console.log('Loading progress: ', progress.loaded + ' bytes loaded');
+                    }
                 },
                 function(error) {
                     console.error('Error loading model:', error);
-                    document.getElementById('loading-text').textContent = 'Error loading model';
+                    document.getElementById('loading-text').textContent = 'Error loading model. Please check the file path.';
                 }
             );
-        }
-        
-        function createDemoCastle() {
-            // Demo castle structure - replace with your actual model loading
-            const castleGroup = new THREE.Group();
-            
-            // Castle base
-            const baseGeometry = new THREE.BoxGeometry(4, 1, 4);
-            const baseMaterial = new THREE.MeshLambertMaterial({ color: 0x8B7355 });
-            const base = new THREE.Mesh(baseGeometry, baseMaterial);
-            base.position.y = 0.5;
-            castleGroup.add(base);
-            
-            // Castle walls
-            const wallGeometry = new THREE.BoxGeometry(0.3, 2, 4);
-            const wallMaterial = new THREE.MeshLambertMaterial({ color: 0xA0A0A0 });
-            
-            // Four walls
-            for (let i = 0; i < 4; i++) {
-                const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-                const angle = (i * Math.PI) / 2;
-                wall.position.x = Math.cos(angle) * 2;
-                wall.position.z = Math.sin(angle) * 2;
-                wall.position.y = 2;
-                wall.rotation.y = angle;
-                castleGroup.add(wall);
-            }
-            
-            // Castle towers
-            const towerGeometry = new THREE.CylinderGeometry(0.5, 0.5, 3, 8);
-            const towerMaterial = new THREE.MeshLambertMaterial({ color: 0x708090 });
-            
-            // Four corner towers
-            const positions = [[-1.5, -1.5], [1.5, -1.5], [1.5, 1.5], [-1.5, 1.5]];
-            positions.forEach(pos => {
-                const tower = new THREE.Mesh(towerGeometry, towerMaterial);
-                tower.position.set(pos[0], 2.5, pos[1]);
-                castleGroup.add(tower);
-            });
-            
-            scene.add(castleGroup);
-            castle = castleGroup;
-            
-            // Hide loading text
-            document.getElementById('loading-text').style.display = 'none';
         }
         
         function animate() {
@@ -364,9 +492,57 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
         
+        // Scroll Functions
+        function scrollToGallery() {
+            document.getElementById('portfolio-gallery').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        function scrollToTop() {
+            document.getElementById('model-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Show/Hide Back to Top Button and Handle Header Changes
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.getElementById('backToTop');
+            const scrollArrow = document.querySelector('.scroll-arrow');
+            const controlsInfo = document.querySelector('.controls-info');
+            const header = document.querySelector('.header');
+            const gallerySection = document.getElementById('portfolio-gallery');
+            
+            // Get the position of the gallery section
+            const galleryRect = gallerySection.getBoundingClientRect();
+            const isGalleryVisible = galleryRect.top <= window.innerHeight / 2;
+            
+            // Handle back to top button
+            if (window.scrollY > window.innerHeight / 2) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+            
+            // Handle scroll arrow and controls info visibility
+            if (isGalleryVisible) {
+                scrollArrow.classList.add('hidden');
+                controlsInfo.classList.add('hidden');
+            } else {
+                scrollArrow.classList.remove('hidden');
+                controlsInfo.classList.remove('hidden');
+            }
+            
+            // Handle header content change
+            if (isGalleryVisible) {
+                header.innerHTML = '<h1>Portfolio Gallery</h1><p>Explore my collection of design work</p>';
+            } else {
+                header.innerHTML = '<h1>Art & Design Portfolio</h1><p>Interactive 3D Castle Model</p>';
+            }
+        });
+        
         // Initialize when page loads
         window.addEventListener('load', init);
     </script>
 </body>
-</html>
 </html>
